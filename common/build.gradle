@@ -1,0 +1,64 @@
+
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+}
+
+android {
+    compileSdk SdkVersions.compileSdkVersion
+
+    defaultConfig {
+        minSdk SdkVersions.minSdkVersion
+        targetSdk SdkVersions.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        debug {
+            buildConfigField("String", "BASE_URL", "\"Your dev api endpoint\"")
+        }
+
+        release {
+            buildConfigField("String", "BASE_URL", "\"Your prod api endpoint\"")
+
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility SdkVersions.javaVersion
+        targetCompatibility SdkVersions.javaVersion
+    }
+    kotlinOptions {
+        jvmTarget = SdkVersions.jvmTarget
+    }
+    buildFeatures {
+        dataBinding true
+    }
+}
+
+dependencies {
+
+    implementation AndroidLibraries.coreKtx
+    implementation AndroidLibraries.appCompat
+    implementation AndroidLibraries.material
+    testImplementation TestLibraries.junit
+    androidTestImplementation TestLibraries.ext
+    androidTestImplementation TestLibraries.espresso
+
+    implementation AndroidLibraries.kotlinCoroutineAndroid
+
+    implementation Libraries.daggerHilt
+    kapt Libraries.hiltCompiler
+
+    implementation AndroidLibraries.retrofit
+    implementation AndroidLibraries.retrofitConverter
+    implementation AndroidLibraries.gson
+    implementation AndroidLibraries.loggingIntercepter
+
+    implementation AndroidLibraries.hawk
+}

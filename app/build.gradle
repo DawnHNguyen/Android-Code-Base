@@ -1,0 +1,104 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+//    id 'com.google.gms.google-services'
+//    id 'com.google.firebase.crashlytics'
+}
+
+// Note: 2 digits max for each value
+ext.versionMajor = 0
+ext.versionMinor = 0
+ext.versionPatch = 1
+
+android {
+    signingConfigs {
+        debug {
+
+        }
+        release {
+
+        }
+    }
+    compileSdk SdkVersions.compileSdkVersion
+
+    defaultConfig {
+        applicationId "com.dawnnguyen.androidcodebase"
+        minSdk SdkVersions.minSdkVersion
+        targetSdk SdkVersions.targetSdkVersion
+
+        versionCode 1
+        versionName "$versionMajor.$versionMinor.$versionPatch"
+        signingConfig signingConfigs.debug
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+
+        debug {
+            applicationIdSuffix ".debug"
+            resValue "string", "app_name", "Code Base dbg"
+            signingConfig signingConfigs.debug
+        }
+
+        release {
+            resValue "string", "app_name", "Code Base"
+
+            postprocessing {
+                removeUnusedCode true
+                removeUnusedResources true
+                proguardFiles 'proguard-rules.pro'
+            }
+//            signingConfig signingConfigs.release
+        }
+    }
+    compileOptions {
+        sourceCompatibility SdkVersions.javaVersion
+        targetCompatibility SdkVersions.javaVersion
+    }
+    kotlinOptions {
+        jvmTarget = SdkVersions.jvmTarget
+    }
+
+    buildFeatures {
+        dataBinding true
+    }
+}
+
+dependencies {
+
+    implementation AndroidLibraries.coreKtx
+    implementation AndroidLibraries.appCompat
+    implementation AndroidLibraries.material
+    implementation AndroidLibraries.constraintLayout
+    implementation AndroidLibraries.activity
+
+    implementation AndroidLibraries.hawk
+    testImplementation TestLibraries.junit
+    debugImplementation Libraries.hyperionCore
+    debugImplementation Libraries.hyperionCrash
+    debugImplementation Libraries.hyperionMeasurement
+    androidTestImplementation TestLibraries.ext
+    androidTestImplementation TestLibraries.espresso
+    implementation project(Modules.navigation)
+    implementation project(Modules.common)
+
+    implementation Libraries.Timber
+
+    implementation Libraries.daggerHilt
+    implementation AndroidLibraries.kotlinCoroutineAndroid
+    kapt Libraries.hiltCompiler
+
+    // Import the BoM for the Firebase platform
+//    implementation platform('com.google.firebase:firebase-bom:29.0.2')
+
+    // Declare the dependencies for the Crashlytics and Analytics libraries
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+//    implementation 'com.google.firebase:firebase-crashlytics-ktx'
+//    implementation 'com.google.firebase:firebase-analytics-ktx'
+}
+kapt {
+    correctErrorTypes true
+}
