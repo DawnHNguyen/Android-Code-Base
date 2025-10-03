@@ -2,7 +2,7 @@ package com.dawn.data.di
 
 import com.google.gson.Gson
 import com.dawn.data.remote.api.AuthApi
-import com.vibeswidget.data.remote.util.CallAdapterFactory
+import com.dawn.data.remote.util.CallAdapterFactory
 import com.dawn.data.BuildConfig
 import com.dawn.data.remote.util.RefreshTokenAuthenticator
 import dagger.Module

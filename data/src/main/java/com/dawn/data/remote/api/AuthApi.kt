@@ -2,7 +2,7 @@ package com.dawn.data.remote.api
 
 import com.dawn.data.remote.dto.LoginRequest
 import com.dawn.data.remote.dto.LoginResponse
-import com.vibeswidget.domain.utils.Resource
+import com.dawn.domain.utils.Resource
 import retrofit2.http.Body
 import retrofit2.http.POST
 

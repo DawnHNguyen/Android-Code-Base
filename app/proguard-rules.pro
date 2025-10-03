@@ -24,11 +24,14 @@
 #-dontwarn com.facebook.infer.annotation.Nullsafe$Mode
 #-dontwarn com.facebook.infer.annotation.Nullsafe
 
-# In-app class
--keep class com.dawn.domain.utils.Resource
--keep class com.dawn.domain.utils.Resource$Status
--keep class com.dawn.domain.utils.Resource$Status.*
+##---------------Begin: proguard configuration for in -app class ----------
+# Keep Resource sealed class and all its subclasses
+-keep class com.dawn.domain.utils.Resource { *; }
+-keep class com.dawn.domain.utils.Resource$* { *; }
+
+# Keep custom exceptions
 -keep class com.dawn.domain.utils.CustomException.*
+##---------------End: proguard configuration for in -app class ----------
 
 # RevenueCat
 #-dontwarn com.google.api.client.http.GenericUrl

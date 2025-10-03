@@ -1,4 +1,4 @@
-package com.vibeswidget.domain.utils
+package com.dawn.domain.utils
 
 import com.dawn.domain.entity.BaseErrorResponseDomainEntity
 

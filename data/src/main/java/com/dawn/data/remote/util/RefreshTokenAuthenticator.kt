@@ -2,7 +2,7 @@ package com.dawn.data.remote.util
 
 import com.dawn.common.const.SecureStorageKey
 import com.tencent.mmkv.MMKV
-import com.vibeswidget.domain.utils.Resource
+import com.dawn.domain.utils.Resource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import okhttp3.Authenticator
@@ -19,7 +19,7 @@ class RefreshTokenAuthenticator : Authenticator {
         return runBlocking(Dispatchers.IO) {
             val newToken = Resource.success("") //TODO: Call the remote data source to refresh the token
 
-            if (newToken.isSuccessful()) {
+            if (newToken is Resource.Success) {
                 val newAccessToken = "" //TODO: Get the new access token from the newToken
                 val newRefreshToken = "" //TODO: Get the new refresh token from the newToken
                 mmkv.encode(SecureStorageKey.ACCESS_TOKEN, newAccessToken)

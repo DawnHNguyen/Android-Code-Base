@@ -1,4 +1,4 @@
-package com.vibeswidget.common.const
+package com.dawn.common.const
 
 object Const {
 

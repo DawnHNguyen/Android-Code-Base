@@ -1,18 +1,17 @@
-package com.vibeswidget.data.remote.util
+package com.dawn.data.remote.util
 
-import com.google.gson.Gson
 import com.dawn.data.mapping.toDomainEntity
-import com.dawn.data.remote.util.BaseErrorResponse
-import com.vibeswidget.domain.utils.BadRequestException
-import com.vibeswidget.domain.utils.NetworkAuthenticationException
-import com.vibeswidget.domain.utils.NetworkException
-import com.vibeswidget.domain.utils.NetworkForbiddenException
-import com.vibeswidget.domain.utils.NetworkResourceNotFoundException
-import com.vibeswidget.domain.utils.NetworkServerException
-import com.vibeswidget.domain.utils.NoNetworkException
-import com.vibeswidget.domain.utils.RequestTimeoutException
-import com.vibeswidget.domain.utils.Resource
-import com.vibeswidget.domain.utils.UnknownException
+import com.dawn.domain.utils.BadRequestException
+import com.dawn.domain.utils.NetworkAuthenticationException
+import com.dawn.domain.utils.NetworkException
+import com.dawn.domain.utils.NetworkForbiddenException
+import com.dawn.domain.utils.NetworkResourceNotFoundException
+import com.dawn.domain.utils.NetworkServerException
+import com.dawn.domain.utils.NoNetworkException
+import com.dawn.domain.utils.RequestTimeoutException
+import com.dawn.domain.utils.Resource
+import com.dawn.domain.utils.UnknownException
+import com.google.gson.Gson
 import okhttp3.Request
 import okhttp3.ResponseBody
 import okio.IOException
@@ -37,7 +36,7 @@ class CallAdapterFactory private constructor() : CallAdapter.Factory() {
     override fun get(
         returnType: Type,
         annotations: Array<Annotation>,
-        retrofit: Retrofit
+        retrofit: Retrofit,
     ): CallAdapter<*, *>? {
         if (getRawType(returnType) != Call::class.java) {
             return null
@@ -69,7 +68,7 @@ class CallAdapterFactory private constructor() : CallAdapter.Factory() {
 
     private class BodyCallAdapter<T : Any>(
         private val responseType: Type,
-        private val converter: Converter<ResponseBody, Resource<T>>
+        private val converter: Converter<ResponseBody, Resource<T>>,
     ) : CallAdapter<T, Call<Resource<T>>> {
 
         override fun responseType(): Type = responseType
@@ -81,21 +80,20 @@ class CallAdapterFactory private constructor() : CallAdapter.Factory() {
 
     internal class ResourceCall<S : Any>(
         private val delegate: Call<S>,
-        private val converter: Converter<ResponseBody, Resource<S>>
+        private val converter: Converter<ResponseBody, Resource<S>>,
     ) :
         Call<Resource<S>> {
         override fun enqueue(callback: Callback<Resource<S>>) {
 
             delegate.enqueue(object : Callback<S> {
                 override fun onFailure(call: Call<S>, t: Throwable) {
-                    val apiResponse = when (t) {
+                    val apiResponse: Resource<Nothing> = when (t) {
                         is SSLHandshakeException, is IOException -> Resource.error(
                             NoNetworkException(
                                 null,
                                 "No network connection",
                                 "${call.request().method} ${call.request().url}"
                             ),
-                            null
                         )
                         //SSLHandshakeException is thrown when user's internet connection is disconnected
                         //before the server can return response
@@ -105,7 +103,7 @@ class CallAdapterFactory private constructor() : CallAdapter.Factory() {
                                     null,
                                     t.toString(),
                                     "${call.request().method} ${call.request().url}"
-                                ), null
+                                )
                             )
                         }
                     }
@@ -181,10 +179,7 @@ class CallAdapterFactory private constructor() : CallAdapter.Factory() {
 
                         callback.onResponse(
                             this@ResourceCall, Response.success(
-                                Resource.error(
-                                    exception,
-                                    null
-                                )
+                                Resource.error(exception)
                             )
                         )
                     }
