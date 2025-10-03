@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1019295158369",
+    "project_id": "dawn-codebase",
+    "storage_bucket": "dawn-codebase.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1019295158369:android:cfd81fa628121f63879a20",
+        "android_client_info": {
+          "package_name": "com.dawn.codebase"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAtYuPjN3c6LOUgBq5hwkVatzUoDOYpolU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

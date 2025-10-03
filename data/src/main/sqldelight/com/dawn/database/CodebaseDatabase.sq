@@ -1,0 +1,12 @@
+CREATE TABLE IF NOT EXISTS tbl_User(
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL
+);
+
+addUser:
+    INSERT INTO tbl_User (name) VALUES (:name);
+    SELECT last_insert_rowid();
+
+updateUser:
+    UPDATE tbl_User SET name = :name WHERE id = :id;
+    SELECT changes();
